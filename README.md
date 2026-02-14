@@ -75,7 +75,7 @@ I've packed this server with over 20 tools. Here’s the breakdown of what your 
 * **Squads**: Handle multi-assistant handoffs and complex architectures.
 * **Data**: Pull analytics, cost reports, and logs for debugging.
 
-## How to Integrate with Antigravity (2026 Update)
+## How to Integrate with Antigravity
 
 To make this server available to the agent in your Antigravity environment, follow these exact steps:
 
@@ -97,7 +97,7 @@ Add the following entry inside the `"mcpServers"` object. Make sure to use absol
   "mcpServers": {
     "vapi": {
       "command": "node",
-      "args": ["d:/Visual_Code/vapi-mcp-server/build/index.js"],
+      "args": ["path of the instalation/vapi-mcp-server/build/index.js"],
       "env": {
         "VAPI_API_KEY": "your_private_api_key_here"
       }
