@@ -1,0 +1,22 @@
+{
+    "name": "vapi-mcp-server",
+    "version": "1.0.0",
+    "description": "MCP server for Vapi voice AI platform",
+    "main": "build/index.js",
+    "type": "module",
+    "scripts": {
+        "build": "tsc",
+        "start": "node build/index.js",
+        "dev": "tsc -w"
+    },
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.26.0",
+        "node-fetch": "^3.3.2",
+        "zod": "^3.23.8",
+        "dotenv": "^16.4.5"
+    },
+    "devDependencies": {
+        "@types/node": "^22.0.0",
+        "typescript": "^5.7.0"
+    }
+}
