@@ -118,4 +118,4 @@ Add the following entry inside the `"mcpServers"` object. Make sure to use absol
 Once registered, you can just tell the agent: *"List my Vapi assistants"* or *"Create a call with..."* and it will use these tools directly.
 
 ---
-Built with Love and ☕ by **Ageborn Dev**
+Built with Love ❤️ and ☕ by **Ageborn Dev**

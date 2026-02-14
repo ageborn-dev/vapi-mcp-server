@@ -6,7 +6,11 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+console.error("[Vapi MCP] Initializing server...");
+
 const vapi = new VapiClient(process.env.VAPI_API_KEY);
+
+console.error("[Vapi MCP] VapiClient initialized. Registering tools...");
 
 const server = new McpServer({
     name: "vapi-mcp-server",
@@ -42,9 +46,9 @@ server.registerTool(
         description: "Create a new Vapi assistant",
         inputSchema: {
             name: z.string(),
-            model: z.any().optional(),
-            voice: z.any().optional(),
-            transcriber: z.any().optional(),
+            model: z.record(z.any()).optional(),
+            voice: z.record(z.any()).optional(),
+            transcriber: z.record(z.any()).optional(),
             firstMessage: z.string().optional(),
             serverUrl: z.string().optional()
         }
@@ -60,7 +64,7 @@ server.registerTool(
         description: "Update an existing Vapi assistant",
         inputSchema: {
             id: z.string(),
-            data: z.any()
+            data: z.record(z.any())
         }
     },
     async ({ id, data }) => ({
@@ -111,7 +115,7 @@ server.registerTool(
         inputSchema: {
             assistantId: z.string(),
             phoneNumberId: z.string().optional(),
-            customer: z.any().optional()
+            customer: z.record(z.any()).optional()
         }
     },
     async (args) => ({
@@ -215,9 +219,9 @@ server.registerTool(
         description: "Create a new Vapi tool",
         inputSchema: {
             type: z.string(),
-            messages: z.array(z.any()).optional(),
-            function: z.any().optional(),
-            server: z.any().optional()
+            messages: z.array(z.record(z.any())).optional(),
+            function: z.record(z.any()).optional(),
+            server: z.record(z.any()).optional()
         }
     },
     async (args) => ({
@@ -242,7 +246,7 @@ server.registerTool(
         inputSchema: {
             name: z.string(),
             provider: z.string(),
-            config: z.any()
+            config: z.record(z.any())
         }
     },
     async (args) => ({
@@ -265,7 +269,7 @@ server.registerTool(
     {
         description: "Get Vapi analytics",
         inputSchema: {
-            queries: z.array(z.any())
+            queries: z.array(z.record(z.any()))
         }
     },
     async (args) => ({
@@ -284,8 +288,13 @@ server.registerTool(
 );
 
 async function runServer() {
+    console.error("[Vapi MCP] Connecting with StdioServerTransport...");
     const transport = new StdioServerTransport();
     await server.connect(transport);
+    console.error("[Vapi MCP] Server connected and ready.");
 }
 
-runServer().catch(console.error);
+runServer().catch(err => {
+    console.error("[Vapi MCP] FATAL ERROR during startup:", err);
+    process.exit(1);
+});
