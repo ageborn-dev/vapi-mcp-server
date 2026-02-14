@@ -161,4 +161,28 @@ export class VapiClient {
     async listLogs() {
         return this.request("GET", "/log");
     }
+
+    async listWorkflows() {
+        return this.request("GET", "/workflow");
+    }
+
+    async getWorkflow(id: string) {
+        return this.request("GET", `/workflow/${id}`);
+    }
+
+    async createWorkflow(data: any) {
+        return this.request("POST", "/workflow", data);
+    }
+
+    async updateWorkflow(id: string, data: any) {
+        return this.request("PATCH", `/workflow/${id}`, data);
+    }
+
+    async deleteWorkflow(id: string) {
+        return this.request("DELETE", `/workflow/${id}`);
+    }
+
+    async chat(data: any) {
+        return this.request("POST", "/chat", data);
+    }
 }

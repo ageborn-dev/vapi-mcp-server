@@ -214,6 +214,19 @@ server.registerTool(
 );
 
 server.registerTool(
+    "vapi_get_tool",
+    {
+        description: "Get a specific Vapi tool",
+        inputSchema: {
+            id: z.string()
+        }
+    },
+    async ({ id }) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.getTool(id)) }]
+    })
+);
+
+server.registerTool(
     "vapi_create_tool",
     {
         description: "Create a new Vapi tool",
@@ -230,12 +243,52 @@ server.registerTool(
 );
 
 server.registerTool(
+    "vapi_update_tool",
+    {
+        description: "Update an existing Vapi tool",
+        inputSchema: {
+            id: z.string(),
+            data: z.record(z.any())
+        }
+    },
+    async ({ id, data }) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.updateTool(id, data)) }]
+    })
+);
+
+server.registerTool(
+    "vapi_delete_tool",
+    {
+        description: "Delete a Vapi tool",
+        inputSchema: {
+            id: z.string()
+        }
+    },
+    async ({ id }) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.deleteTool(id)) }]
+    })
+);
+
+server.registerTool(
     "vapi_list_knowledge_bases",
     {
         description: "List all Vapi knowledge bases"
     },
     async () => ({
         content: [{ type: "text", text: JSON.stringify(await vapi.listKnowledgeBases()) }]
+    })
+);
+
+server.registerTool(
+    "vapi_get_knowledge_base",
+    {
+        description: "Get a specific Vapi knowledge base",
+        inputSchema: {
+            id: z.string()
+        }
+    },
+    async ({ id }) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.getKnowledgeBase(id)) }]
     })
 );
 
@@ -255,12 +308,79 @@ server.registerTool(
 );
 
 server.registerTool(
+    "vapi_delete_knowledge_base",
+    {
+        description: "Delete a Vapi knowledge base",
+        inputSchema: {
+            id: z.string()
+        }
+    },
+    async ({ id }) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.deleteKnowledgeBase(id)) }]
+    })
+);
+
+server.registerTool(
     "vapi_list_squads",
     {
         description: "List all Vapi squads"
     },
     async () => ({
         content: [{ type: "text", text: JSON.stringify(await vapi.listSquads()) }]
+    })
+);
+
+server.registerTool(
+    "vapi_get_squad",
+    {
+        description: "Get a specific Vapi squad",
+        inputSchema: {
+            id: z.string()
+        }
+    },
+    async ({ id }) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.getSquad(id)) }]
+    })
+);
+
+server.registerTool(
+    "vapi_create_squad",
+    {
+        description: "Create a new Vapi squad",
+        inputSchema: {
+            name: z.string().optional(),
+            members: z.array(z.record(z.any()))
+        }
+    },
+    async (args) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.createSquad(args)) }]
+    })
+);
+
+server.registerTool(
+    "vapi_update_squad",
+    {
+        description: "Update an existing Vapi squad",
+        inputSchema: {
+            id: z.string(),
+            data: z.record(z.any())
+        }
+    },
+    async ({ id, data }) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.updateSquad(id, data)) }]
+    })
+);
+
+server.registerTool(
+    "vapi_delete_squad",
+    {
+        description: "Delete a Vapi squad",
+        inputSchema: {
+            id: z.string()
+        }
+    },
+    async ({ id }) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.deleteSquad(id)) }]
     })
 );
 
@@ -284,6 +404,86 @@ server.registerTool(
     },
     async () => ({
         content: [{ type: "text", text: JSON.stringify(await vapi.listLogs()) }]
+    })
+);
+
+server.registerTool(
+    "vapi_list_workflows",
+    {
+        description: "List all Vapi workflows"
+    },
+    async () => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.listWorkflows()) }]
+    })
+);
+
+server.registerTool(
+    "vapi_get_workflow",
+    {
+        description: "Get a specific Vapi workflow",
+        inputSchema: {
+            id: z.string()
+        }
+    },
+    async ({ id }) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.getWorkflow(id)) }]
+    })
+);
+
+server.registerTool(
+    "vapi_create_workflow",
+    {
+        description: "Create a new Vapi workflow",
+        inputSchema: {
+            name: z.string(),
+            nodes: z.array(z.record(z.any())),
+            edges: z.array(z.record(z.any())).optional()
+        }
+    },
+    async (args) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.createWorkflow(args)) }]
+    })
+);
+
+server.registerTool(
+    "vapi_update_workflow",
+    {
+        description: "Update an existing Vapi workflow",
+        inputSchema: {
+            id: z.string(),
+            data: z.record(z.any())
+        }
+    },
+    async ({ id, data }) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.updateWorkflow(id, data)) }]
+    })
+);
+
+server.registerTool(
+    "vapi_delete_workflow",
+    {
+        description: "Delete a Vapi workflow",
+        inputSchema: {
+            id: z.string()
+        }
+    },
+    async ({ id }) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.deleteWorkflow(id)) }]
+    })
+);
+
+server.registerTool(
+    "vapi_chat",
+    {
+        description: "Send a message to an assistant or continue a chat session",
+        inputSchema: {
+            assistantId: z.string().optional(),
+            sessionId: z.string().optional(),
+            input: z.string().optional()
+        }
+    },
+    async (args) => ({
+        content: [{ type: "text", text: JSON.stringify(await vapi.chat(args)) }]
     })
 );
 
