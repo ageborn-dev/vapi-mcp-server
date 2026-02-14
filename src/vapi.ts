@@ -4,11 +4,15 @@ export class VapiClient {
     private apiKey: string;
     private baseUrl: string = "https://api.vapi.ai";
 
-    constructor(apiKey: string) {
-        this.apiKey = apiKey;
+    constructor(apiKey?: string) {
+        this.apiKey = apiKey || "";
     }
 
     private async request(method: string, endpoint: string, body?: any) {
+        if (!this.apiKey) {
+            throw new Error("VAPI_API_KEY environment variable is required. Please check your MCP configuration.");
+        }
+
         const response = await fetch(`${this.baseUrl}${endpoint}`, {
             method,
             headers: {

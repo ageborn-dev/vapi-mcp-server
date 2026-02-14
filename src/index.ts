@@ -6,12 +6,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const API_KEY = process.env.VAPI_API_KEY;
-if (!API_KEY) {
-    throw new Error("VAPI_API_KEY environment variable is required");
-}
-
-const vapi = new VapiClient(API_KEY);
+const vapi = new VapiClient(process.env.VAPI_API_KEY);
 
 const server = new McpServer({
     name: "vapi-mcp-server",
