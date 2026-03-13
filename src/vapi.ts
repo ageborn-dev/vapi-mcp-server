@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 
 export class VapiClient {
     private apiKey: string;
@@ -43,6 +42,22 @@ export class VapiClient {
     }
 
     async updateAssistant(id: string, data: any) {
+        if (data.model || data.voice || data.transcriber) {
+            const current = await this.getAssistant(id) as any;
+            const mergedData = { ...data };
+            
+            if (data.model && current.model) {
+                mergedData.model = { ...current.model, ...data.model };
+            }
+            if (data.voice && current.voice) {
+                mergedData.voice = { ...current.voice, ...data.voice };
+            }
+            if (data.transcriber && current.transcriber) {
+                mergedData.transcriber = { ...current.transcriber, ...data.transcriber };
+            }
+            
+            return this.request("PATCH", `/assistant/${id}`, mergedData);
+        }
         return this.request("PATCH", `/assistant/${id}`, data);
     }
 
@@ -118,22 +133,6 @@ export class VapiClient {
         return this.request("DELETE", `/tool/${id}`);
     }
 
-    async listKnowledgeBases() {
-        return this.request("GET", "/knowledge-base");
-    }
-
-    async getKnowledgeBase(id: string) {
-        return this.request("GET", `/knowledge-base/${id}`);
-    }
-
-    async createKnowledgeBase(data: any) {
-        return this.request("POST", "/knowledge-base", data);
-    }
-
-    async deleteKnowledgeBase(id: string) {
-        return this.request("DELETE", `/knowledge-base/${id}`);
-    }
-
     async listSquads() {
         return this.request("GET", "/squad");
     }
@@ -158,31 +157,42 @@ export class VapiClient {
         return this.request("POST", "/analytics", data);
     }
 
-    async listLogs() {
-        return this.request("GET", "/log");
-    }
-
-    async listWorkflows() {
-        return this.request("GET", "/workflow");
-    }
-
-    async getWorkflow(id: string) {
-        return this.request("GET", `/workflow/${id}`);
-    }
-
-    async createWorkflow(data: any) {
-        return this.request("POST", "/workflow", data);
-    }
-
-    async updateWorkflow(id: string, data: any) {
-        return this.request("PATCH", `/workflow/${id}`, data);
-    }
-
-    async deleteWorkflow(id: string) {
-        return this.request("DELETE", `/workflow/${id}`);
+    async getCampaignAnalytics() {
+        return this.request("POST", "/analytics", {
+            queries: [{ table: "call", operations: [{ operation: "count", column: "id" }] }]
+        });
     }
 
     async chat(data: any) {
         return this.request("POST", "/chat", data);
+    }
+
+    async generateWorkflow(data: any) {
+        return this.request("POST", "/workflow/generate", data);
+    }
+
+    async listSessions() {
+        return this.request("GET", "/session");
+    }
+
+    async getSession(id: string) {
+        return this.request("GET", `/session/${id}`);
+    }
+
+    async createSession(data: any) {
+        return this.request("POST", "/session", data);
+    }
+
+    async deleteSession(id: string) {
+        return this.request("DELETE", `/session/${id}`);
+    }
+
+    async createSupportTicket(data: any) {
+        return this.request("POST", "/support/ticket", data);
+    }
+
+    async getCallArtifacts(id: string) {
+        const call = await this.getCall(id) as any;
+        return call.artifacts || {};
     }
 }
