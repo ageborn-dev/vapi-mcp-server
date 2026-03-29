@@ -1,5 +1,7 @@
 # Vapi MCP Server
 
+[![SafeSkill 60/100](https://img.shields.io/badge/SafeSkill-60%2F100_Use%20with%20Caution-orange)](https://safeskill.dev/scan/ageborn-dev-vapi-mcp-server)
+
 Hey there! This is a custom Model Context Protocol (MCP) server designed specifically for the Vapi Voice AI platform. I built this to bridge the gap between AI models and Vapi's infrastructure, allowing agents to actually manage voice bots and phone calls instead of just talking about them.
 
 This project was built and is maintained by **Ageborn Dev**.
