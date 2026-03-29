@@ -1,10 +1,21 @@
 {
+  "manifest_version": "0.2",
   "name": "vapi-mcp-server",
   "version": "1.0.0",
   "description": "MCP server for Vapi voice AI platform",
-  "author": "https://github.com/ageborn-dev",
-  "mcp_config": {
-    "command": "node",
-    "args": ["build/index.js"]
-  }
+  "author": {
+    "name": "https://github.com/ageborn-dev"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "build/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/build/index.js"
+      ],
+      "env": {}
+    }
+  },
+  "license": "MIT"
 }
