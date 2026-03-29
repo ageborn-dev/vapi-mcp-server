@@ -66,38 +66,34 @@ Vapi provides two types of keys in your dashboard. It's important to use the rig
 
 ## The Toolset
 
-I've packed this server with over 20 tools. Here’s the breakdown of what your AI can actually do:
+This server is packed with over 30 advanced tools that map directly to the latest Vapi 2026 platform architecture. Here is a breakdown of what your AI can actually do:
 
-* **Assistants**: Full CRUD (Create, Read, Update, Delete) support for your voice bots.
-* **Calls**: You can start calls, end them, and get full transcripts or evaluations.
-* **Phone Numbers**: Buy new numbers or import existing ones from Twilio/Vonage without leaving the chat.
-* **Knowledge & Tools**: Manage the "brains" and webhooks that power your assistants.
-* **Squads**: Handle multi-assistant handoffs and complex architectures.
-* **Data**: Pull analytics, cost reports, and logs for debugging.
+* **Assistants**: Full CRUD (Create, Read, Update, Delete) support for your voice bots (supporting the latest Vapi Voices collection).
+* **Calls**: Start calls, end them, and run detailed AI evaluations natively.
+* **Phone Numbers**: Buy new numbers or seamlessly import existing ones from Twilio/Vonage and other providers.
+* **Knowledge & Tools**: Deploy and manage the custom server functions, webhooks, and tool nodes that power your assistants.
+* **Squads**: Handle multi-assistant handoffs and build complex conversational architectures.
+* **Chat & Sessions**: Full CRUD for Vapi chat sessions, allowing you to natively test and chat with your assistants without initiating a phone call.
+* **Workflows**: Generate entire Vapi workflows using AI directly from your IDE or chat client.
+* **Diagnostics & Data**: Pull campaign analytics, cost reports, and deep diagnostic *artifacts* from completed calls—reflecting Vapi's updated 2026 observability system.
+* **Support**: File support tickets directly with the Vapi team.
 
-## How to Integrate with Antigravity
+## How to Integrate with your AI Agent
 
-To make this server available to the agent in your Antigravity environment, follow these exact steps:
+Since this server is built on the standard Model Context Protocol (MCP), you can attach it to **any** MCP-compatible AI client (such as Claude Desktop, Cursor, or your preferred IDE/Agent environment).
 
-### 1. Open the MCP Configuration
+### 1. Configure the Server
 
-The configuration is managed globally within the Antigravity IDE.
+Most MCP clients rely on a standard `mcp_config.json` file (or sometimes a UI menu) to attach local servers.
 
-1. In the Antigravity editor, go to the **Agent Pane** (typically top right).
-2. Click the **Three-Dot Menu** (Additional Options).
-3. Select **MCP Servers** -> **Manage MCP Servers**.
-4. Click **View raw config**. This will open the official `mcp_config.json` file in your editor.
-
-### 2. Add the Vapi Server
-
-Add the following entry inside the `"mcpServers"` object. Make sure to use absolute paths.
+Add the following entry to your configuration file (make sure to replace the placeholder paths with your actual absolute paths on your machine):
 
 ```json
 {
   "mcpServers": {
     "vapi": {
       "command": "node",
-      "args": ["path of the instalation/vapi-mcp-server/build/index.js"],
+      "args": ["/absolute/path/to/vapi-mcp-server/build/index.js"],
       "env": {
         "VAPI_API_KEY": "your_private_api_key_here"
       }
@@ -106,16 +102,13 @@ Add the following entry inside the `"mcpServers"` object. Make sure to use absol
 }
 ```
 
-### 3. Save and Refresh
+### 2. Save and Restart
 
-1. **Save** the `mcp_config.json` file.
-2. Go back to the **Manage MCP Servers** view in the Agent Pane.
-3. Click the **Refresh** button.
-4. The "vapi" server should now appear in the list with all 20+ tools enabled.
+Save your configuration and restart or refresh your AI client.
 
 ### 🚀 Usage
 
-Once registered, you can just tell the agent: *"List my Vapi assistants"* or *"Create a call with..."* and it will use these tools directly.
+Once registered and authenticated, you can just naturally ask your AI agent: *"List my Vapi assistants"* or *"Start a Vapi chat session..."* and the agent will securely utilize this backend to execute your commands directly!
 
 ---
 Built with Love ❤️ and ☕ by **Ageborn Dev**
